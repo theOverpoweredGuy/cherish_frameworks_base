@@ -34,12 +34,11 @@ interface KeyguardQuickAffordanceRegistry<T : KeyguardQuickAffordanceConfig> {
 class KeyguardQuickAffordanceRegistryImpl
 @Inject
 constructor(
-    private val context: Context,
-    private val homeControls: HomeControlsKeyguardQuickAffordanceConfig,
-    private val quickAccessWallet: QuickAccessWalletKeyguardQuickAffordanceConfig,
-    private val qrCodeScanner: QrCodeScannerKeyguardQuickAffordanceConfig,
-    private val camera: CameraKeyguardQuickAffordanceConfig,
-    private val flashlight: FlashlightKeyguardQuickAffordanceConfig,
+    homeControls: HomeControlsKeyguardQuickAffordanceConfig,
+    quickAccessWallet: QuickAccessWalletKeyguardQuickAffordanceConfig,
+    qrCodeScanner: QrCodeScannerKeyguardQuickAffordanceConfig,
+    camera: CameraKeyguardQuickAffordanceConfig,
+    flashlight: FlashlightKeyguardQuickAffordanceConfig,
 ) : KeyguardQuickAffordanceRegistry<KeyguardQuickAffordanceConfig> {
 
     private val configsBySetting: Map<String, KeyguardQuickAffordanceConfig> =
