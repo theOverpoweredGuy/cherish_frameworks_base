@@ -4722,6 +4722,11 @@ public final class NotificationPanelViewController extends PanelViewController {
                 /* notifyForDescendants */ false,
                 mSettingsChangeObserver
         );
+        mContentResolver.registerContentObserver(
+                Settings.System.getUriFor(Settings.System.KEYGUARD_QUICK_TOGGLES),
+                /* notifyForDescendants */ false,
+                mSettingsChangeObserver
+        );
     }
 
     private void unregisterSettingsChangeListener() {
@@ -4956,8 +4961,13 @@ public final class NotificationPanelViewController extends PanelViewController {
         public void onChange(boolean selfChange) {
             if (DEBUG_LOGCAT) Log.d(TAG, "onSettingsChanged");
 
-            // Can affect multi-user switcher visibility
-            reInflateViews();
+            if (uri.getLastPathSegment().equals(
+                    Settings.System.KEYGUARD_QUICK_TOGGLES)) {
+                mKeyguardBottomAreaViewModel.updateSettings();
+            } else {
+                // Can affect multi-user switcher visibility
+                reInflateViews();
+            }
         }
     }
 
