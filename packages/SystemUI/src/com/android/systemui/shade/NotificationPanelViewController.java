@@ -5069,6 +5069,11 @@ public final class NotificationPanelViewController implements Dumpable {
                 /* notifyForDescendants */ false,
                 mSettingsChangeObserver
         );
+        mContentResolver.registerContentObserver(
+                Settings.System.getUriFor(Settings.System.KEYGUARD_QUICK_TOGGLES),
+                /* notifyForDescendants */ false,
+                mSettingsChangeObserver
+        );
     }
 
     public void setBlockedGesturalNavigation(boolean blocked) {
@@ -5926,8 +5931,14 @@ public final class NotificationPanelViewController implements Dumpable {
         public void onChange(boolean selfChange) {
             debugLog("onSettingsChanged");
 
-            // Can affect multi-user switcher visibility
-            reInflateViews();
+            if (uri.getLastPathSegment().equals(
+                    Settings.System.KEYGUARD_QUICK_TOGGLES)) {
+                mKeyguardBottomAreaViewModel.updateSettings();
+            }
+            else {
+                // Can affect multi-user switcher visibility
+                reInflateViews();
+            }
         }
     }
 
